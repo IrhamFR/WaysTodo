@@ -1,19 +1,73 @@
-import React from "react";
+import { StyleSheet, View } from "react-native";
+import * as React from "react";
 import {
-    Text,
-    HStack,
-    Center,
-    NativeBaseProvider,
     VStack,
-    FormControl,
+    Image,
+    Center,
+    HStack,
     Button,
-    Input
+    Text,
+    Box,
+    Heading,
+    FormControl,
+    Input,
+    Link,
+    NativeBaseProvider,
 } from "native-base";
 import {  TouchableOpacity } from "react-native";
 import LoginIcon from "../components/LoginIcon";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function Login({navigation}) {
+    const [isLogin, setIsLogin] = React.useState(false);
+    const [login, setLogin] = React.useState({
+        email: "",
+        password: "",
+    });
+
+    const handleChanges = (title, value) => {
+        setLogin({
+            ...login,
+            [title]: value,
+        });
+    };
+
+    console.log(login);
+
+    const handlelogin = async () => {
+        try {
+            const config = {
+                headers: {
+                    "content-type": "application/json",
+                },
+            };
+
+            const body = JSON.stringify(login);
+            setIsLogin(true);
+            const res = await axios.post(
+                "https://api.kontenbase.com/query/api/v1/38e15c87-5d11-4dd7-b913-45e78b92cce2/auth/login",
+                body,
+                config
+            );
+            console.log(res);
+            setIsLogin(false);
+            if (res) {
+                await AsyncStorage.setItem("token", res.data.token);
+            }
+            const value = await AsyncStorage.getItem("token");
+            if (value != null) {
+                console.log(value);
+                navigation.navigate("Todo");
+            }
+            console.log(value);
+        } catch (error) {
+            console.log(error);
+            alert(error.res.data.message);
+        }
+    };
+
     return (
         <NativeBaseProvider>
             <VStack space={2} alignItems=""  mt={100}>
@@ -28,6 +82,7 @@ export default function Login({navigation}) {
                                 bold
                                 bg="muted.200"
                                 size="md"
+                                onChangeText={(value) => handleChanges("email", value)}
                             />
                         </FormControl>
                         <FormControl w="80%">
@@ -37,15 +92,16 @@ export default function Login({navigation}) {
                                 bold
                                 bg="muted.200"
                                 size="md"
+                                onChangeText={(value) => handleChanges("password", value)}
                             />
                         </FormControl>
-                        <Button variant="danger" bg="error.600" w="80%" mt="10">
+                        <Button variant="danger" bg="error.600" w="80%" mt="10"  onPress={handlelogin}>
                             <Text bold color="white">Login</Text>
                         </Button>
                     </Center>
                     <Center>
                     <Text>
-                        New Users?  
+                        New Users? {" "}
                         <TouchableOpacity onPress={()=>navigation.navigate('Register')}>
                             <Text color="error.600" bold mt="2">
                                 Register

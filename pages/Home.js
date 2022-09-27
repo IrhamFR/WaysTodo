@@ -1,14 +1,22 @@
 import React from "react";
 import {
   Text,
+  Link,
   HStack,
+  Center,
+  Heading,
+  Switch,
+  useColorMode,
   NativeBaseProvider,
+  extendTheme,
   VStack,
+  Stack,
+  Box,
+  Image,
   Button
 } from "native-base";
 import Todo from "../components/Todo";
-
-
+import { NavigationContainer } from '@react-navigation/native'
 
 
 export default function Home({ navigation }) {

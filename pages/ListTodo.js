@@ -19,12 +19,7 @@ import NavbarFooter from "../components/NavbarFooter";
 
 
 export default function ListTodo ({ navigation }) {
-  const [isActive, setIsActive] = useState(false);
-  
-  const handleClick = () => {
-    // 👇️ toggle
-    setIsActive(current => !current);
-  };
+
   return (
     <>
     <NativeBaseProvider >
@@ -79,7 +74,7 @@ export default function ListTodo ({ navigation }) {
           <View bg="primary.100" borderRadius="10" p="2">
               <Flex direction="row"  w="100%">
                 <Flex direction="column" w="80%">
-                  <Text mt="2" fontSize={17} bold>
+                  <Text mt="2" fontSize={17} bold onPress={() => navigation.navigate("Detail")}>
                   Study - Golang
                   </Text>
                   <Text mb="3" fontSize={12} color="light.500" >
@@ -92,14 +87,7 @@ export default function ListTodo ({ navigation }) {
                 </Flex >  
                 <Flex direction="column" w="20%">
                   <Button bg="primary.300" px="1" mb="4" h="7">Study</Button>
-                  <Button 
-                  borderRadius="100%" 
-                  size="50" 
-                  style={{
-                    backgroundColor: isActive ? 'salmon' : 'gray',
-                    color: isActive ? 'white' : 'black',
-                  }}
-                  onClick={handleClick}>   </Button>
+                  <Button bg="light.300" borderRadius="100%" size="50">   </Button>
                 </Flex>
               </Flex>
           </View>
@@ -120,7 +108,7 @@ export default function ListTodo ({ navigation }) {
                 </Flex >  
                 <Flex direction="column" w="20%">
                   <Button bg="danger.300" px="1" mb="4" h="7">Home Work</Button>
-                  <Button bg="light.300" borderRadius="100%" size="50">   </Button>
+                  <Button bg="success.300" borderRadius="100%" size="50">   </Button>
                 </Flex>
               </Flex>
           </View>
@@ -141,7 +129,7 @@ export default function ListTodo ({ navigation }) {
                 </Flex >  
                 <Flex direction="column" w="20%">
                   <Button bg="primary.300" px="1" mb="4" h="7">Study</Button>
-                  <Button bg="light.300" borderRadius="100%" size="50">   </Button>
+                  <Button bg="success.300" borderRadius="100%" size="50">   </Button>
                 </Flex>
               </Flex>
           </View>

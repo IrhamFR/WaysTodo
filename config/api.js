@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "https://api.kontenbase.com/query/api/v1/c5f678b6-7982-40cd-8e0a-8cf475ba4bfa",
+  baseURL: "https://api.kontenbase.com/query/api/v1/38e15c87-5d11-4dd7-b913-45e78b92cce2/",
 });
 
 export const setAuthToken = (token) => {
